@@ -14,9 +14,9 @@ function numControl( array, num ) {
   return false;
 }
 
-function genBtn () {
-  for ( var i = 1; i == btnMaxValue; i++ ) {
-    htmlElement.innerHTML += "<button class=\"btn\" value = " + i + ">" + i + "</button>";
+function displayBtn (btnMaxValue, htmlElement) {
+  for ( var i = 1; i < btnMaxValue + 1; i++ ) {
+    htmlElement.innerHTML += "<button type=\"button\" name=\"button\" class=\"btn\" value = " + i + ">" + i + "</button>";
   }
 }
 
@@ -29,6 +29,7 @@ function startGame() {
   minNum = 1,
   nBombe = 16;
   output = document.getElementById('output'),
+  containerBtn = document.getElementById('buttons-container');
   userNum = 0,
   userNumList = [],
   boom = new Audio('audio/oooh.mp3'),
@@ -54,23 +55,25 @@ function startGame() {
   }
   console.log("Numeri bomba: " + bombs);
 
+  displayBtn(maxNum, containerBtn);
 
-  // Ciclo che riceve il numero in input, controlla la validità, controlla se è una bomba o meno. Terminati i numeri sicuri il contatore viene incrementato per fermare il ciclo
-  while ( userNumList.length < maxNum - nBombe ) {
-    userNum = parseInt( prompt("Inserisci un numero da " + minNum + " a " + maxNum ) );
-    if ( userNum < minNum || userNum > maxNum || isNaN( userNum ) ) {
-      alert("Il valore inserito non è valido");
-    } else if ( userNumList.length > 0 && numControl( userNumList, userNum ) == true ) {
-      alert("Devi inserire un numero diverso, non barare!!");
-    } else {
-      userNumList.push(userNum);
-    }
-    if ( numControl( bombs, userNum ) == true ) {
-      boom.play();
-      return output.innerHTML = "Hai perso... Punteggio: " + userNumList.length;
-    } else if ( userNumList.length == maxNum - nBombe ) {
-      kids.play();
-      return output.innerHTML = "Hai vinto!! Complimenti!!";
-    }
-  }
 }
+//   // Ciclo che riceve il numero in input, controlla la validità, controlla se è una bomba o meno. Terminati i numeri sicuri il contatore viene incrementato per fermare il ciclo
+//   while ( userNumList.length < maxNum - nBombe ) {
+//     userNum = parseInt( prompt("Inserisci un numero da " + minNum + " a " + maxNum ) );
+//     if ( userNum < minNum || userNum > maxNum || isNaN( userNum ) ) {
+//       alert("Il valore inserito non è valido");
+//     } else if ( userNumList.length > 0 && numControl( userNumList, userNum ) == true ) {
+//       alert("Devi inserire un numero diverso, non barare!!");
+//     } else {
+//       userNumList.push(userNum);
+//     }
+//     if ( numControl( bombs, userNum ) == true ) {
+//       boom.play();
+//       return output.innerHTML = "Hai perso... Punteggio: " + userNumList.length;
+//     } else if ( userNumList.length == maxNum - nBombe ) {
+//       kids.play();
+//       return output.innerHTML = "Hai vinto!! Complimenti!!";
+//     }
+//   }
+// }
