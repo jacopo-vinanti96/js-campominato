@@ -15,7 +15,13 @@ function numControl( array, num ) {
 
 function displayBtn (btnMaxValue, htmlElement) {
   for ( var i = 1; i < btnMaxValue + 1; i++ ) {
-    htmlElement.innerHTML += "<input type=\"checkbox\" name=\"button\" class=\"btn\" onclick=\"btnValue()\" value = " + i + ">" + "</input>" + "<span class=\"checkbox-number\">" + i + "</span>";
+    htmlElement.innerHTML += "<input type=\"checkbox\" name=\"button\" class=\"btn\" onclick=\"btnValue()\" value =" + i + ">" + "<span class=\"checkbox-number\">" + i + "</span>";
+  }
+}
+
+function eleminateBtn (btnMaxValue, htmlElement) {
+  for ( var i = 1; i < btnMaxValue + 1; i++ ) {
+    htmlElement.innerHTML = "";
   }
 }
 
@@ -47,11 +53,13 @@ function startGame() {
   }
 
   // Ciclo for per generare i numeri con un ciclo for e per controllare che sia diverso dagli altri numeri tramite funzioni
-  for ( var i = 0; i < nBombe; i++ ) {
-    if ( bombs.length > 0 && numControl( bombs, bombs[i] ) == true ) {
-      i -= 1;
+  var i = 0;
+  while ( i < nBombe ) {
+    newNumber = genRandomNum( maxNum, minNum );
+    if ( numControl( bombs, newNumber ) == false ) {
+      bombs.push(newNumber);
+      i++;
     }
-    bombs[i] = genRandomNum( maxNum, minNum );
   }
   console.log("Numeri bomba: " + bombs);
 
@@ -60,19 +68,22 @@ function startGame() {
 
 function btnValue() {
   if ( userNumList.length < maxNum - nBombe ) {
-    var generatedButtonsHTML = document.querySelectorAll('.btn');
+    var buttonsHTML = document.querySelectorAll('.btn');
     var buttonValue = 0;
-    var i = 0;
     var clicked = false;
     var userLose = false;
 
-    for ( i = 0; generatedButtonsHTML < maxNum; i++) {
-      if ( generatedButtonsHTML[i].checked == true ) {
-        buttonValue = generatedButtonsHTML[i].value
+    for ( var i = 0; i < maxNum; i++) {
+      if ( buttonsHTML[i].checked == true ) {
+        buttonValue = buttonsHTML[i].value
         if ( numControl( bombs, buttonValue ) == true ) {
+          output.classList.add("visible");
+          eleminateBtn (maxNum, containerBtn);
           return output.innerHTML = "Hai perso... Punteggio: " + userNumList.length;
         } else {
-          generatedButtonsHTML[i].classList.add("clicked");
+          buttonsHTML[i].classList.add("clicked");
+          console.log(buttonsHTML[i]);
+          console.log(buttonsHTML[i].value);
         }
       }
     }

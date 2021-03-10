@@ -1,4 +1,3 @@
-
 // Genera un numero casuale
 function genRandomNum( max, min ) {
   return Math.floor( Math.random() * (max - min + 1) ) + min;
@@ -9,15 +8,10 @@ function numControl( array, num ) {
   for ( var j = 0; j < array.length; j++ ) {
     if ( num == array[j] ) {
       return true;
+      console.log(num);
     }
   }
   return false;
-}
-
-function displayBtn (btnMaxValue, htmlElement) {
-  for ( var i = 1; i < btnMaxValue + 1; i++ ) {
-    htmlElement.innerHTML += "<span class=\"checkbox-number\">" + i + "</span>" + "<button type=\"button\" name=\"button\" class=\"btn\" value = " + i + ">""</button>";
-  }
 }
 
 // Onclick inizia la funzione
@@ -47,41 +41,32 @@ function startGame() {
   }
 
   // Ciclo for per generare i numeri con un ciclo for e per controllare che sia diverso dagli altri numeri tramite funzioni
-  for ( var i = 0; i < nBombe; i++ ) {
-    if ( bombs.length > 0 && numControl( bombs, bombs[i] ) == true ) {
-      i -= 1;
+  var i = 0;
+  while ( i < nBombe ) {
+    newNumber = genRandomNum( maxNum, minNum );
+    if ( numControl( bombs, newNumber ) == false ) {
+      bombs.push(newNumber);
+      i++;
     }
-    bombs[i] = genRandomNum( maxNum, minNum );
   }
   console.log("Numeri bomba: " + bombs);
 
-  displayBtn(maxNum, containerBtn);
-
-  var generatedButtonsHTML = getElementsByClassName('.btn');
-
-  for ( i = 0; i < maxNum; i++ ) {
-  addIngredient[i].addEventListener("click", function() {
-    this.classList.toggle("check-add-ingredient");
-  });
+  // Ciclo che riceve il numero in input, controlla la validità, controlla se è una bomba o meno. Terminati i numeri sicuri il contatore viene incrementato per fermare il ciclo
+  while ( userNumList.length < maxNum - nBombe ) {
+    userNum = parseInt( prompt("Inserisci un numero da " + minNum + " a " + maxNum ) );
+    if ( userNum < minNum || userNum > maxNum || isNaN( userNum ) ) {
+      alert("Il valore inserito non è valido");
+    } else if ( userNumList.length > 0 && numControl( userNumList, userNum ) == true ) {
+      alert("Devi inserire un numero diverso, non barare!!");
+    } else {
+      userNumList.push(userNum);
+    }
+    if ( numControl( bombs, userNum ) == true ) {
+      boom.play();
+      return output.innerHTML = "Hai perso... Punteggio: " + userNumList.length;
+    } else if ( userNumList.length == maxNum - nBombe ) {
+      kids.play();
+      return output.innerHTML = "Hai vinto!! Complimenti!!";
+    }
+  }
 }
-
-}
-//   // Ciclo che riceve il numero in input, controlla la validità, controlla se è una bomba o meno. Terminati i numeri sicuri il contatore viene incrementato per fermare il ciclo
-//   while ( userNumList.length < maxNum - nBombe ) {
-//     userNum = parseInt( prompt("Inserisci un numero da " + minNum + " a " + maxNum ) );
-//     if ( userNum < minNum || userNum > maxNum || isNaN( userNum ) ) {
-//       alert("Il valore inserito non è valido");
-//     } else if ( userNumList.length > 0 && numControl( userNumList, userNum ) == true ) {
-//       alert("Devi inserire un numero diverso, non barare!!");
-//     } else {
-//       userNumList.push(userNum);
-//     }
-//     if ( numControl( bombs, userNum ) == true ) {
-//       boom.play();
-//       return output.innerHTML = "Hai perso... Punteggio: " + userNumList.length;
-//     } else if ( userNumList.length == maxNum - nBombe ) {
-//       kids.play();
-//       return output.innerHTML = "Hai vinto!! Complimenti!!";
-//     }
-//   }
-// }
