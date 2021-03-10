@@ -20,9 +20,7 @@ function displayBtn (btnMaxValue, htmlElement) {
 }
 
 function eleminateBtn (btnMaxValue, htmlElement) {
-  for ( var i = 1; i < btnMaxValue + 1; i++ ) {
     htmlElement.innerHTML = "";
-  }
 }
 
 // Dichiarazione variabili
@@ -75,15 +73,14 @@ function btnValue() {
     var buttonsHTML = document.querySelectorAll('.btn');
     var buttonValue = 0;
     var clicked = false;
-    var userLose = false;
 
     for ( var i = 0; i < maxNum; i++) {
       if ( buttonsHTML[i].checked == true ) {
         buttonValue = buttonsHTML[i].value
         if ( numControl( bombs, buttonValue ) == true ) {
-          boom.play();
           output.classList.add("visible");
           eleminateBtn (maxNum, containerBtn);
+          boom.play();
           return output.innerHTML = "Hai perso... Punteggio: " + userNumList.length;
         } else {
           buttonsHTML[i].classList.add("clicked");
