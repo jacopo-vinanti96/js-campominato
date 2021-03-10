@@ -16,7 +16,7 @@ function numControl( array, num ) {
 
 function displayBtn (btnMaxValue, htmlElement) {
   for ( var i = 1; i < btnMaxValue + 1; i++ ) {
-    htmlElement.innerHTML += "<button type=\"button\" name=\"button\" class=\"btn\" value = " + i + ">" + i + "</button>";
+    htmlElement.innerHTML += "<span class=\"checkbox-number\">" + i + "</span>" + "<button type=\"button\" name=\"button\" class=\"btn\" value = " + i + ">""</button>";
   }
 }
 
@@ -56,6 +56,14 @@ function startGame() {
   console.log("Numeri bomba: " + bombs);
 
   displayBtn(maxNum, containerBtn);
+
+  var generatedButtonsHTML = getElementsByClassName('.btn');
+
+  for ( i = 0; i < maxNum; i++ ) {
+  addIngredient[i].addEventListener("click", function() {
+    this.classList.toggle("check-add-ingredient");
+  });
+}
 
 }
 //   // Ciclo che riceve il numero in input, controlla la validità, controlla se è una bomba o meno. Terminati i numeri sicuri il contatore viene incrementato per fermare il ciclo
