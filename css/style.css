@@ -1,0 +1,10 @@
+header,
+main {
+  text-align: center;
+  width: 100%;
+}
+
+main button {
+  padding: 10px 25px;
+  font-size: 20px;
+}
