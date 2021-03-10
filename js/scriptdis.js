@@ -29,7 +29,8 @@ maxNum = 100,
 minNum = 1,
 nBombe = 16;
 output = document.getElementById('output'),
-containerBtn = document.getElementById('buttons-container');
+containerBtn = document.getElementById('buttons-container'),
+startGameBtn = document.getElementById('start-game-btn'),
 userNum = 0,
 userNumList = [],
 boom = new Audio('audio/oooh.mp3'),
@@ -39,9 +40,11 @@ kids = new Audio('audio/hurray.mp3');
 function startGame() {
 
   // Reset
+  startGameBtn.classList.add("d-none");
   output.classList.remove("visible");
   bombs = [];
   userNumList = [];
+  maxNum = 100;
 
   // Selezione livello e relativi controlli
   var level = parseInt( prompt("INSERISCI: \n0 = livello facile \n1 = livello normale \n2 = livello difficile") );
@@ -66,6 +69,7 @@ function startGame() {
   console.log("Numeri bomba: " + bombs);
 
   displayBtn(maxNum, containerBtn);
+
 }
 
 function btnValue() {
@@ -78,6 +82,8 @@ function btnValue() {
       if ( buttonsHTML[i].checked == true ) {
         buttonValue = buttonsHTML[i].value
         if ( numControl( bombs, buttonValue ) == true ) {
+          endGame = true;
+          startGameBtn.classList.remove("d-none");
           output.classList.add("visible");
           eleminateBtn (maxNum, containerBtn);
           boom.play();
@@ -91,6 +97,7 @@ function btnValue() {
     userNumList.push(buttonValue);
 
   } else if ( userNumList.length == maxNum - nBombe ) {
+    endGame = true;
     kids.play();
     return output.innerHTML = "Hai vinto!! Complimenti!!";
   }
