@@ -77,6 +77,7 @@ function btnValue() {
       if ( buttonsHTML[i].checked == true ) {
         buttonValue = buttonsHTML[i].value
         if ( numControl( bombs, buttonValue ) == true ) {
+          boom.play();
           output.classList.add("visible");
           eleminateBtn (maxNum, containerBtn);
           return output.innerHTML = "Hai perso... Punteggio: " + userNumList.length;
